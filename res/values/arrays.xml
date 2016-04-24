@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="operation">
+        <item>插入</item>
+        <item>查询</item>
+        <item>更新</item>
+        <item>删除</item>
+    </string-array>
+    <string-array name="table">
+        <item>书籍表</item>
+        <item>出版社表</item>
+        <item>连接查询</item>
+    </string-array>
+    <string-array name="mode">
+        <item>精确查找</item>
+        <item>模糊查找</item>
+    </string-array>
+
+</resources>

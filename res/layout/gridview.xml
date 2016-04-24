@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <CheckBox
+            android:id="@+id/cb_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="标题" />
+
+        <CheckBox
+            android:id="@+id/cb_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="作者" />
+
+        <CheckBox
+            android:id="@+id/cb_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="出版年份" />
+
+        <CheckBox
+            android:id="@+id/cb_book_printer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="出版机构" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <CheckBox
+            android:id="@+id/cb_pageNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="页数" />
+        
+        <CheckBox android:id="@+id/cb_printer_printer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="出版机构"/>
+
+        <CheckBox
+            android:id="@+id/cb_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="出版地" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/result_gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </GridView>
+
+</LinearLayout>
