@@ -89,7 +89,7 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f090025;
+        public static final int action_settings=0x7f090026;
         public static final int btn_apply=0x7f090006;
         public static final int cb_author=0x7f09000a;
         public static final int cb_book_printer=0x7f09000c;
@@ -103,8 +103,8 @@ containing a value of this type.
         public static final int layout_condition=0x7f090003;
         public static final int layout_gene_expr=0x7f090007;
         public static final int layout_sort=0x7f090012;
-        public static final int layout_table_book=0x7f090016;
-        public static final int layout_table_printer=0x7f090020;
+        public static final int layout_table_book=0x7f090017;
+        public static final int layout_table_printer=0x7f090021;
         public static final int result_gridView=0x7f090010;
         public static final int send_activity_topbar=0x7f090000;
         public static final int sort_cb=0x7f090013;
@@ -114,19 +114,20 @@ containing a value of this type.
         public static final int spinner_mode=0x7f090004;
         public static final int spinner_op=0x7f090001;
         public static final int spinner_table=0x7f090002;
-        public static final int table_book_ed_author=0x7f090018;
-        public static final int table_book_ed_pageNo_end=0x7f09001f;
-        public static final int table_book_ed_pageNo_start=0x7f09001d;
-        public static final int table_book_ed_printer=0x7f09001c;
-        public static final int table_book_ed_title=0x7f090017;
-        public static final int table_book_ed_year_end=0x7f09001b;
-        public static final int table_book_ed_year_start=0x7f090019;
-        public static final int table_book_layout_pageNo=0x7f09001e;
-        public static final int table_book_layout_year=0x7f09001a;
-        public static final int table_printer_ed_location=0x7f090022;
-        public static final int table_printer_ed_printer=0x7f090021;
-        public static final int update_dialog_new=0x7f090024;
-        public static final int update_dialog_old=0x7f090023;
+        public static final int sql_dialog_text=0x7f090016;
+        public static final int table_book_ed_author=0x7f090019;
+        public static final int table_book_ed_pageNo_end=0x7f090020;
+        public static final int table_book_ed_pageNo_start=0x7f09001e;
+        public static final int table_book_ed_printer=0x7f09001d;
+        public static final int table_book_ed_title=0x7f090018;
+        public static final int table_book_ed_year_end=0x7f09001c;
+        public static final int table_book_ed_year_start=0x7f09001a;
+        public static final int table_book_layout_pageNo=0x7f09001f;
+        public static final int table_book_layout_year=0x7f09001b;
+        public static final int table_printer_ed_location=0x7f090023;
+        public static final int table_printer_ed_printer=0x7f090022;
+        public static final int update_dialog_new=0x7f090025;
+        public static final int update_dialog_old=0x7f090024;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -135,9 +136,10 @@ containing a value of this type.
         public static final int gridview=0x7f030003;
         public static final int item_gridview=0x7f030004;
         public static final int sort=0x7f030005;
-        public static final int table_book=0x7f030006;
-        public static final int table_printer=0x7f030007;
-        public static final int update_dialog=0x7f030008;
+        public static final int sql_dialog=0x7f030006;
+        public static final int table_book=0x7f030007;
+        public static final int table_printer=0x7f030008;
+        public static final int update_dialog=0x7f030009;
     }
     public static final class menu {
         public static final int main=0x7f080000;

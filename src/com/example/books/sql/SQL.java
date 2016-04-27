@@ -1,13 +1,24 @@
 package com.example.books.sql;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
+import com.example.books.R;
+import com.example.books.ResultActivity;
 import com.example.books.Utils;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.DropBoxManager;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 public class SQL {
 
@@ -15,12 +26,23 @@ public class SQL {
 	String[] tableName;
 	SQLiteDatabase db;
 	Context context;
+	Context mainActivity_context;
+	final int DIALOG_INSERT =0;
+	final int DIALOG_DELETE =1;
+	final int DIALOG_UPDATE =2;
+	final int DIALOG_SEARCH =3;
+	
+	Cursor cursor;
 
 	public SQL(Context context, String dbName, String[] tableName) {
 		this.context=context;
 		this.dbName = dbName;
 		this.tableName = tableName;
 		initDb(context);
+	}
+	
+	public void setMainActivityContext(Context context){
+		this.mainActivity_context=context;
 	}
 
 	// 主活动中传入上下文信息
@@ -69,7 +91,8 @@ public class SQL {
 		}
 
 		for (int i = 0; i < strings_books.length; i++) {
-			insertData_book(bools_books, strings_books[i]);
+			//不生成表达式
+			insertData_book(bools_books, strings_books[i],SQLUtils.GENE_EXPR_N);
 		}
 	}
 
@@ -84,7 +107,8 @@ public class SQL {
 	//search_column 按某一列进行排序
 	//search_order 升序或降序
 	public Cursor search_book(boolean[] bools, String[] strings, int search_Mode,
-			int link_condition_op,int order_or_not,int search_column,int search_order ) {
+			int link_condition_op,int order_or_not,int search_column,int search_order,
+			int expr) {
 		// 首先需要根据查询条件构建查询表达式
 		String searchSQL = "select * from " + SQLUtils.tableName_book + " where ";
 		String link_op;//取决于查找模式，如果是精确查找使用'=',否则，使用‘like'
@@ -161,13 +185,17 @@ public class SQL {
 			
 		Utils.showToast(context, searchSQL);
 		//return null;
-		 Cursor cursor;
-		try{
-		    cursor = db.rawQuery(searchSQL, null);
-		    Utils.showToast(context, "搜索书籍表成功！");
-		}catch(Exception e){
-			Utils.showToast(context, "啊哦~搜索书籍表时遇到了错误！");
-			cursor=null;
+		 //Cursor cursor;
+		if(expr==SQLUtils.GENE_EXPR_Y){
+			showDialog(searchSQL, DIALOG_SEARCH);
+		}else{
+			try{
+			    cursor = db.rawQuery(searchSQL, null);
+			    Utils.showToast(context, "搜索书籍表成功！");
+			}catch(Exception e){
+				Utils.showToast(context, "啊哦~搜索书籍表时遇到了错误！");
+				cursor=null;
+			}
 		}
 		return cursor;
 	}
@@ -218,7 +246,7 @@ public class SQL {
 			}
 		}
 		
-		Cursor cursor;
+		//Cursor cursor;
 		try{
 			cursor= db.rawQuery(searchSQL, null);
 			Utils.showToast(context, "搜索出版社表成功啦！~");
@@ -247,7 +275,8 @@ public class SQL {
 		return null;
 	}
 
-	public boolean insertData_book(boolean[] bools, String[] strings) {
+	//返回值没有什么用了..!
+	public boolean insertData_book(boolean[] bools, String[] strings,int expr) {
 		String insertSql = "insert into " + SQLUtils.tableName_book + "(";
 		int comma_flag = 0;
 		for (int i = 0; i < bools.length; i++) {
@@ -273,13 +302,19 @@ public class SQL {
 			}
 		}
 		insertSql += ")";
-		try {
-			db.execSQL(insertSql);
-			Utils.showToast(context, "插入到书籍表成功啦！~");
-			return true;
-		} catch (Exception e) {
-			Utils.showToast(context, "啊哦~插入到书籍表时遇到了错误！~");
-			return false;
+		
+		if(expr==SQLUtils.GENE_EXPR_Y){
+			showDialog(insertSql,DIALOG_INSERT);
+			return false; 
+		}else{
+			try {
+				db.execSQL(insertSql);
+				Utils.showToast(context, "插入到书籍表成功啦！~");
+				return true;
+			} catch (Exception e) {
+				Utils.showToast(context, "啊哦~插入到书籍表时遇到了错误！~");
+				return false;
+			}
 		}
 	}
 
@@ -319,7 +354,8 @@ public class SQL {
 		}
 	}
 
-	public boolean delete_book(boolean[] bools, String[] strings) {
+	//返回值没用了。。。！
+	public boolean delete_book(boolean[] bools, String[] strings,int expr) {
 		String deletesql = "delete from " + SQLUtils.tableName_book + " where ";
 		int and_flag = 0;
 		for (int i = 0; i < bools.length; i++) {
@@ -332,13 +368,19 @@ public class SQL {
 				}
 			}
 		}
-		try {
-			db.execSQL(deletesql);
-			Utils.showToast(context, "从书籍表删除记录成功啦！~");
-			return true;
-		} catch (Exception e) {
-			Utils.showToast(context, "啊哦~尝试从书籍表删除记录失败了！~");
+		
+		if(expr==DIALOG_DELETE){
+			showDialog(deletesql, DIALOG_DELETE);
 			return false;
+		}else{
+			try {
+				db.execSQL(deletesql);
+				Utils.showToast(context, "从书籍表删除记录成功啦！~");
+				return true;
+			} catch (Exception e) {
+				Utils.showToast(context, "啊哦~尝试从书籍表删除记录失败了！~");
+				return false;
+			}
 		}
 	}
 
@@ -368,7 +410,8 @@ public class SQL {
 	}
 	
 	//将columnindex对应列（从0开始计数）的属性值修改为str
-	public boolean update_book(int columnindex,String str,String primarykey) {
+	//返回值没用..!
+	public boolean update_book(int columnindex,String str,String primarykey,int expr) {
 		String updatesql = "update " + SQLUtils.tableName_book 
 				           + " set " 
 				           + SQLUtils.table_book_column[columnindex]
@@ -378,15 +421,25 @@ public class SQL {
 				           + SQLUtils.quotationed(primarykey)
 				           ;
 		
-	
-		try {
-			db.execSQL(updatesql);
-			Utils.showToast(context, "更新书籍表成功啦！~");
-			return true;
-		} catch (Exception e) {
-			Utils.showToast(context, "啊哦~尝试更新书籍表时遇到了错误！~");
+		if(expr==SQLUtils.GENE_EXPR_Y){
+			showDialog(updatesql,DIALOG_UPDATE );
 			return false;
+		}else{
+			try {
+				db.execSQL(updatesql);
+				Utils.showToast(context, "更新书籍表成功啦！~");
+				return true;
+			} catch (Exception e) {
+				Utils.showToast(context, "啊哦~尝试更新书籍表时遇到了错误！~");
+				return false;
+			}
 		}
+	}
+	
+	//默认不生成表达式
+	public boolean update_book(int columnindex,String str,String primarykey) {
+		update_book(columnindex, str, primarykey,SQLUtils.GENE_EXPR_N);
+		return false;
 	}
 	
 	//将columnindex对应列（从0开始计数）的属性值修改为str
@@ -409,6 +462,93 @@ public class SQL {
 				Utils.showToast(context, "啊哦~尝试更新出版社表时遇到了错误！~");
 				return false;
 			}
+		}
+		
+		boolean ret;
+		//flag 0:exec
+		//flag 1:query
+		public void showDialog(final String sql,final int flag){
+			
+			LayoutInflater inflater=LayoutInflater.from(mainActivity_context);
+			View dialog=inflater.inflate(R.layout.sql_dialog, null);
+			TextView textView=(TextView) dialog.findViewById(R.id.sql_dialog_text);
+			textView.setText(sql);
+			AlertDialog.Builder builder=new AlertDialog.Builder(mainActivity_context);
+			builder.setCancelable(false)
+			       .setTitle("您将要执行如下sql语句")
+			       .setView(dialog)
+			       .setPositiveButton("确认", new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						switch (flag) {
+						case DIALOG_INSERT:
+							try{
+								db.execSQL(sql);
+								Utils.showToast(context, "插入成功");
+							}catch (Exception e) {
+								Utils.showToast(context, "插入失败");
+							}
+							break;
+						case DIALOG_DELETE:
+							try{
+								db.execSQL(sql);
+								Utils.showToast(context, "删除成功");
+							}catch (Exception e) {
+								Utils.showToast(context, "删除失败");
+							}
+							break;
+						case DIALOG_UPDATE:
+							try{
+								db.execSQL(sql);
+								Utils.showToast(context, "更新成功");
+							}catch (Exception e) {
+								Utils.showToast(context, "更新失败");
+							}
+							break;
+						case DIALOG_SEARCH:
+							try{
+								cursor=db.rawQuery(sql,null);
+								Utils.showToast(context, "查询成功");
+								
+								if(cursor==null){
+									break;
+								}
+								ArrayList<String> strList=new ArrayList<String>();
+								for(int i=0;i<SQLUtils.table_book_column.length;i++){
+									strList.add(SQLUtils.table_book_column[i]);
+								}
+								while(cursor.moveToNext()){
+									//showToast("find:"+cursor.getString(0));
+									strList.add(cursor.getString(0));
+									strList.add(cursor.getString(1));
+									strList.add(cursor.getString(2));
+									strList.add(cursor.getString(3));
+									strList.add(cursor.getString(4));
+									
+								}
+								Intent intent =new Intent(mainActivity_context,ResultActivity.class);
+								Bundle bundle=new Bundle();
+								bundle.putInt("columnNo", SQLUtils.table_book_column.length);
+								bundle.putSerializable("strlist", (Serializable) strList);
+								intent.putExtras(bundle);
+								mainActivity_context.startActivity(intent);
+							}catch (Exception e) {
+								Utils.showToast(context, "查询失败");
+							}
+							break;
+
+						default:
+							break;
+						}
+					}
+				})
+			       .setNegativeButton("取消",new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				})
+			       .show();
+			
 		}
 	
 
