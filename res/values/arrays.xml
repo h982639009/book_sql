@@ -13,8 +13,27 @@
         <item>连接查询</item>
     </string-array>
     <string-array name="mode">
-        <item>精确查找</item>
-        <item>模糊查找</item>
+        <item>精确查找/删除</item>
+        <item>模糊查找/删除</item>
+    </string-array>
+    <string-array name="link_op">
+        <item>条件与</item>
+        <item>条件或</item>
+    </string-array>
+    <string-array name="book_column">
+        <item>标题</item>
+        <item>作者</item>
+        <item>出版年份</item>
+        <item>出版社</item>
+        <item>页码</item>
+    </string-array>
+    <string-array name="printer_column">
+        <item>出版社</item>
+        <item>出版地址</item>
+    </string-array>
+    <string-array name="sort_order">
+        <item>升序</item>
+        <item>降序</item>
     </string-array>
 
 </resources>

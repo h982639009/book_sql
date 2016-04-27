@@ -37,6 +37,18 @@ public class SQLUtils {
 		}
 	}
 	
-	public static int SEARCH_EXACT=1;
-	public static int SEARCH_FUZZY=2;
+	public static final int SEARCH_EXACT=1;
+	public static final int SEARCH_FUZZY=2;
+	
+	public static final int AND_CONDITION=1;
+	public static final int OR_CONDITION=2;
+	
+	public static final int NEED_ORDER_Y=1;
+	public static final int NEDD_ORDER_N=2;
+	
+	public static final int ORDER_INCREASE=1;
+	public static final int ORDER_DECREASE=2;
+	
+	public static final int GENE_EXPR_Y=1;
+	public static final int GENE_EXPR_N=2;
 }
