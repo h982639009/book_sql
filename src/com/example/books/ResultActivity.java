@@ -2,15 +2,24 @@ package com.example.books;
 
 import java.util.ArrayList;
 
+import com.example.books.sql.SQL;
 import com.example.books.sql.SQLUtils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.GridView;
+import android.widget.TextView;
 
 public class ResultActivity extends Activity{
 	GridView gridview;
@@ -25,6 +34,8 @@ public class ResultActivity extends Activity{
 	final int TABLE_PRINT=2;
 	
 	int currentTable;
+	LayoutInflater inflater;
+	SQL sql;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
@@ -40,9 +51,10 @@ public class ResultActivity extends Activity{
 			Utils.showToast(ResultActivity.this, "bundle null");
 		}
 		
+		inflater=LayoutInflater.from(this);
 		initBool();
 		
-		
+		sql=((MyApplication)getApplication()).getSQL();
 		gridview=(GridView) findViewById(R.id.result_gridView);
 		gridview.setNumColumns(columns);
 		adapter=new GridViewAdapter(ResultActivity.this, strList, R.layout.item_gridview);
@@ -197,6 +209,62 @@ public class ResultActivity extends Activity{
 	}
 	
 	void addGridViewListener(){
-		//gridview.setONItem
+		gridview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+				// TODO Auto-generated method stub
+//				Utils.showToast(ResultActivity.this, position+"clicked!");
+//				EditText editText=(EditText) view.findViewById(R.id.item_gv_ed);
+//				editText.setEnabled(true);
+				TextView textView=(TextView) view.findViewById(R.id.item_gv_txt);
+				String old=textView.getText().toString();
+				View dialog=inflater.inflate(R.layout.update_dialog, null);
+				((TextView)(dialog.findViewById(R.id.update_dialog_old)))
+				     .setText(old);
+				final EditText editText=(EditText) dialog.findViewById(R.id.update_dialog_new);
+				AlertDialog.Builder builder=new AlertDialog.Builder(ResultActivity.this);
+				builder.setCancelable(false)
+				       .setTitle("您将要修改以下信息")
+				       .setView(dialog)
+				       .setPositiveButton("确认", new OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							int columnindex;
+							String primarykey;
+					
+							if(currentTable==TABLE_BOOK){
+								columnindex=position%SQLUtils.table_book_column.length;
+								primarykey=strList.get(position-columnindex);
+								sql.update_book(columnindex, editText.getText().toString(), 
+										primarykey);
+							}else if(currentTable==TABLE_PRINT){
+								columnindex=position%SQLUtils.table_printer_column.length;
+								primarykey=strList.get(position-columnindex);
+								sql.update_printer(columnindex, editText.getText().toString(), 
+										primarykey);
+							}
+							//除了执行相应的sql语句外，还需要更新gridview的显示
+							strList.set(position, editText.getText().toString());
+							adapter.notifyDataSetChanged();//通知更新界面
+							
+						    Utils.showToast(ResultActivity.this, "success");
+							
+						}
+					})
+				       .setNegativeButton("取消",new OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							
+							
+						}
+					})
+				       .show();
+				
+				
+			}
+		});
 	}
 }

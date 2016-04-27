@@ -265,5 +265,46 @@ public class SQL {
 			return false;
 		}
 	}
+	
+	//将columnindex对应列（从0开始计数）的属性值修改为str
+	public boolean update_book(int columnindex,String str,String primarykey) {
+		String updatesql = "update " + SQLUtils.tableName_book 
+				           + " set " 
+				           + SQLUtils.table_book_column[columnindex]
+				           +" = "
+				           + SQLUtils.quotationed(str)
+				           +" where title="
+				           + SQLUtils.quotationed(primarykey)
+				           ;
+		
+	
+		try {
+			db.execSQL(updatesql);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	//将columnindex对应列（从0开始计数）的属性值修改为str
+		public boolean update_printer(int columnindex,String str,String primarykey) {
+			String updatesql = "update " + SQLUtils.tableName_printer 
+					           + " set " 
+					           + SQLUtils.table_printer_column[columnindex]
+					           +" = "
+					           + SQLUtils.quotationed(str)
+					           +" where printer="
+					           + SQLUtils.quotationed(primarykey)
+					           ;
+			
+		
+			try {
+				db.execSQL(updatesql);
+				return true;
+			} catch (Exception e) {
+				return false;
+			}
+		}
+	
 
 }

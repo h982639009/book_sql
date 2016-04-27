@@ -22,7 +22,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -45,7 +44,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		//初始化数据库
 		initViewReference();
-		sql=new SQL(MainActivity.this,SQLUtils.dbName,SQLUtils.tableNames);
+		//sql=new SQL(MainActivity.this,SQLUtils.dbName,SQLUtils.tableNames);
+		sql=((MyApplication)getApplication()).getSQL();
 		
 	}
 	

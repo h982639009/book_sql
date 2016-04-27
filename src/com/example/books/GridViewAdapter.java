@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class GridViewAdapter extends CommonAdapter<String> {
@@ -19,6 +20,8 @@ public class GridViewAdapter extends CommonAdapter<String> {
 		// TODO Auto-generated method stub
 		TextView textView=holder.getViewById(R.id.item_gv_txt);
 		textView.setText(data);
+//		EditText editText=holder.getViewById(R.id.item_gv_ed);
+//		editText.setText(data);
 	}
 
 	
