@@ -10,7 +10,7 @@
     <string-array name="table">
         <item>书籍表</item>
         <item>出版社表</item>
-        <item>连接查询</item>
+<!--         <item>连接查询</item> -->
     </string-array>
     <string-array name="mode">
         <item>精确查找/删除</item>

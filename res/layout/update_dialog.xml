@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <TextView
+        <TextView android:id="@+id/update_dialog_AttrName_old"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="oldAttri " />
@@ -25,6 +25,7 @@
         android:layout_height="wrap_content" >
 
         <TextView
+            android:id="@+id/update_dialog_AttrName_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="newAttri" />

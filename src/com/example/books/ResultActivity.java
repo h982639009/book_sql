@@ -14,10 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -217,12 +218,24 @@ public class ResultActivity extends Activity{
 //				Utils.showToast(ResultActivity.this, position+"clicked!");
 //				EditText editText=(EditText) view.findViewById(R.id.item_gv_ed);
 //				editText.setEnabled(true);
+				//获取gridView中的item的txt
 				TextView textView=(TextView) view.findViewById(R.id.item_gv_txt);
 				String old=textView.getText().toString();
 				View dialog=inflater.inflate(R.layout.update_dialog, null);
 				((TextView)(dialog.findViewById(R.id.update_dialog_old)))
 				     .setText(old);
 				final EditText editText=(EditText) dialog.findViewById(R.id.update_dialog_new);
+				final TextView txt_attrName_old=(TextView)dialog.findViewById(R.id.update_dialog_AttrName_old);
+				final TextView txt_attrName_new=(TextView)dialog.findViewById(R.id.update_dialog_AttrName_new);
+				
+				if(currentTable==TABLE_BOOK){
+					txt_attrName_old.setText("old_"+SQLUtils.table_book_column[position%SQLUtils.table_book_column.length]);
+					txt_attrName_new.setText("new_"+SQLUtils.table_book_column[position%SQLUtils.table_book_column.length]);
+				}else{
+					txt_attrName_old.setText("old_"+SQLUtils.table_printer_column[position%SQLUtils.table_printer_column.length]);
+					txt_attrName_new.setText("new_"+SQLUtils.table_printer_column[position%SQLUtils.table_printer_column.length]);
+				}
+				
 				AlertDialog.Builder builder=new AlertDialog.Builder(ResultActivity.this);
 				builder.setCancelable(false)
 				       .setTitle("您将要修改以下信息")
@@ -264,6 +277,16 @@ public class ResultActivity extends Activity{
 				       .show();
 				
 				
+			}
+		});
+	
+	    gridview.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				//sql.delete_book(bools, strings, expr)
+				
+				return true;
 			}
 		});
 	}

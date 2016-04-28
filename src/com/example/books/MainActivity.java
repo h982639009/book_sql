@@ -377,7 +377,7 @@ public class MainActivity extends Activity {
 						sql.insertData_book(bools_book, strings_book,need_expr);
 						//showToast("插入成功");
 					}else{
-						sql.insertData_printer(bools_printer, strings_printer);
+						sql.insertData_printer(bools_printer, strings_printer,need_expr);
 						//showToast("插入成功");
 					}
 					break;
@@ -409,22 +409,22 @@ public class MainActivity extends Activity {
 						MainActivity.this.startActivity(intent);*/
 					}else if(currentTable==1){
 						cursor=sql.search_printer(bools_printer, strings_printer,currentMode,currentLinkOP,
-								need_order,order_column,incre_or_dcre);
-						strList=new ArrayList<String>();
-						for(int i=0;i<SQLUtils.table_printer_column.length;i++){
-							strList.add(SQLUtils.table_printer_column[i]);
-						}
-						while(cursor.moveToNext()){
-							//showToast("find:"+cursor.getString(0));
-							strList.add(cursor.getString(0));
-							strList.add(cursor.getString(1));
-						}
-						Intent intent =new Intent(MainActivity.this,ResultActivity.class);
-						Bundle bundle=new Bundle();
-						bundle.putInt("columnNo", SQLUtils.table_printer_column.length);
-						bundle.putSerializable("strlist", (Serializable) strList);
-						intent.putExtras(bundle);
-						MainActivity.this.startActivity(intent);
+								need_order,order_column,incre_or_dcre,need_expr);
+//						strList=new ArrayList<String>();
+//						for(int i=0;i<SQLUtils.table_printer_column.length;i++){
+//							strList.add(SQLUtils.table_printer_column[i]);
+//						}
+//						while(cursor.moveToNext()){
+//							//showToast("find:"+cursor.getString(0));
+//							strList.add(cursor.getString(0));
+//							strList.add(cursor.getString(1));
+//						}
+//						Intent intent =new Intent(MainActivity.this,ResultActivity.class);
+//						Bundle bundle=new Bundle();
+//						bundle.putInt("columnNo", SQLUtils.table_printer_column.length);
+//						bundle.putSerializable("strlist", (Serializable) strList);
+//						intent.putExtras(bundle);
+//						MainActivity.this.startActivity(intent);
 					}else if(currentTable==2){
 						//暂时没有实现连接查询
 					}
@@ -438,7 +438,7 @@ public class MainActivity extends Activity {
 						sql.delete_book(bools_book, strings_book,need_expr);
 						//showToast("delete success!");
 					}else if(currentTable==1){
-						sql.delete_printer(bools_printer,strings_printer);
+						sql.delete_printer(bools_printer,strings_printer,need_expr);
 						//showToast("delete success!");
 					}else if(currentTable==2){
 						

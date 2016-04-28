@@ -89,7 +89,7 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f090026;
+        public static final int action_settings=0x7f090028;
         public static final int btn_apply=0x7f090006;
         public static final int cb_author=0x7f09000a;
         public static final int cb_book_printer=0x7f09000c;
@@ -126,8 +126,10 @@ containing a value of this type.
         public static final int table_book_layout_year=0x7f09001b;
         public static final int table_printer_ed_location=0x7f090023;
         public static final int table_printer_ed_printer=0x7f090022;
-        public static final int update_dialog_new=0x7f090025;
-        public static final int update_dialog_old=0x7f090024;
+        public static final int update_dialog_AttrName_new=0x7f090026;
+        public static final int update_dialog_AttrName_old=0x7f090024;
+        public static final int update_dialog_new=0x7f090027;
+        public static final int update_dialog_old=0x7f090025;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
